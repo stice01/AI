@@ -42,4 +42,13 @@ class Solution(object):
 
 
 
-#
+#BFS Explanation------------- 
+#Using a nested for loop to scan the grid, once I found a piece of land, I was going to need to find all other pieces connected to that piece.
+#To do this, I made a BFS algorithm that took the starting piece of found land, popped it from the queue, and checked for any and all other pieces of land connected either up, down, left, or right.
+#Using a for loop to loop through the 4 directions, queued all 4 before returning to the top of the while loop, ensuring every direction is visited
+#The BFS algorithm uses a queue and a visited set to keep track of what has been visited and what nodes still have other attached nodes that need to be checked
+#This is looped until there are no more connected pieces of land
+
+
+# The screenshot of my submission is in the homework folder as well
+
