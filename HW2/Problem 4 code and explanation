@@ -1,0 +1,45 @@
+#Simon Tice HW2 problem 4
+from collections import deque
+
+class Solution(object):
+    def numIslands(self, grid):
+        rows = len(grid)
+        cols = len(grid[0])
+        visited = set()
+        islands = 0
+
+        #BFS to check all of the connected land once a piece of land is found
+        def BFS(startRow, startCol):
+            #vists starting row/col of the land and adds to queue
+            queue = deque([(startRow, startCol)])
+            visited.add((startRow,startCol))
+
+            #all possible movement directions 
+            directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+            
+            #while queue is not empty search for land
+            while queue:
+                row, col = queue.popleft() #pop from queue and store values
+                for rowMove, colMove in directions: 
+                    nextRow, nextCol = row + rowMove, col + colMove #moves the row and col 1 in all 4 possible directions
+
+                    inBounds = (nextRow >= 0 and nextRow < rows) and (nextCol >= 0 and nextCol < cols) #makes sure next check is in bounds of grid
+                    notVisited = (nextRow, nextCol) not in visited #makes sure next check hasnt been visited
+
+                    if inBounds and grid[nextRow][nextCol] == "1" and notVisited: #make sure its in bounds, it is land, and hasnt been visited
+                        #visit and add to queue if all is valid
+                        visited.add((nextRow, nextCol)) 
+                        queue.append((nextRow, nextCol))
+        
+        #loop through the grid
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == "1" and (row, col) not in visited: #new island discovered
+                    BFS(row, col) #once a piece of land is found call the BFS algo to find all conncected pieces of land and update the island total
+                    islands += 1
+
+        return islands
+
+
+
+#
