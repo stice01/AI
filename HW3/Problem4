@@ -1,0 +1,66 @@
+#HW3 problem 4 Simon Tice
+
+import heapq
+
+class Solution(object):
+    def minimumEffortPath(self, heights):
+        #rows and cols of array
+        rows = len(heights)
+        cols = len(heights[0])
+
+        #all movement directions
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        
+        # heap (effort, row, col)
+        heap = [(0, 0, 0)] #top-left cell, effort = 0
+
+        #initlize the effort matrix
+        #fill the whole grid with infinity effort because they are unexplored and will 
+        #be updated when explored
+        effort = []
+        for r in range(rows): #nested for loop to populate the matrix
+            row = []
+            for c in range(cols):
+                row.append(float('inf'))
+            effort.append(row)
+
+        effort[0][0] = 0  #starting point has no effort
+
+        while heap:
+            #while the heap is not empty 
+            #pop the cell with the lowest effort from the heap(first value in tuple)
+            currentEffort, row, col = heapq.heappop(heap)
+            
+            #check all 4 directions
+            for rowOffset, colOffset in directions:
+                newRow = row + rowOffset
+                newCol = col + colOffset
+
+                #check if within bounds
+                if 0 <= newRow < rows and 0 <= newCol < cols:
+                    #get height difference between current and neighbor cell
+                    heightDiff = abs(heights[newRow][newCol] - heights[row][col]) #possible new effort
+                    
+                    #updates effort: gets the max value between the current effort and the new possible effort 
+                    newEffort = max(currentEffort, heightDiff) 
+
+                    #if this new path is better (less effort), update the effort and push to heap
+                    if newEffort < effort[newRow][newCol]:
+                        effort[newRow][newCol] = newEffort
+                        heapq.heappush(heap, (newEffort, newRow, newCol))
+            
+            #made it to the goal so return how much effort it took
+            if row == rows - 1 and col == cols - 1:
+                return currentEffort
+
+
+
+#############
+#The screenshot of the accepted is in the repo as well
+#############
+#In this problem Dijkstra’s algorithm is used to find a path from the top left to the
+#bottom right cell that minimizes the maximum height difference along the path. 
+#The effort to move to a neighboring cell is the absolute difference in heights.
+#The algorithm uses a priority queue to always explore the cell with the smallest current effort first.
+#As you move through the grid, you keep track of the minimum effort needed to reach each cell, 
+#and when you reach the bottom right cell, the current effort is the answer.
