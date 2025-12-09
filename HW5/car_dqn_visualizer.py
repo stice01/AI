@@ -10,7 +10,7 @@ import pygame
 import sys
 import math
 import os
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 
 
 # Define a named tuple for experience transitions
@@ -600,6 +600,7 @@ def run_part1_epsilon_experiments():
 
     all_rewards = {}
 
+    #Print while training
     for label, eps_decay in decay_settings.items():
         print(f"\n=== Part 1: Training with {label} (eps_decay={eps_decay}) ===")
         rewards = train_agent_for_experiment(
@@ -639,16 +640,13 @@ def run_part1_epsilon_experiments():
         
     plt.show()
 
-    
 
+#fix the epsilon schedule using the best eps_decay from Part 1
+#now vary the discount factor gamma
 def run_part2_gamma_experiments(best_eps_decay):
-    """
-    Part 2: Planning horizon (Gamma).
-    We fix the epsilon schedule using the best eps_decay from Part 1,
-    and now vary the discount factor gamma.
-    """
     NUM_EPISODES = 300
 
+    #three different gamma values
     gamma_settings = {
         "Low gamma": 0.3,   
         "Medium gamma": 0.6,
@@ -657,6 +655,7 @@ def run_part2_gamma_experiments(best_eps_decay):
 
     all_rewards = {}
 
+    #Print while training
     for label, gamma in gamma_settings.items():
         print(f"\n=== Part 2: Training with {label} (gamma={gamma}) ===")
         rewards = train_agent_for_experiment(
