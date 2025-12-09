@@ -641,12 +641,12 @@ def run_part1_epsilon_experiments():
     plt.show()
 
 
-#fix the epsilon schedule using the best eps_decay from Part 1
-#now vary the discount factor gamma
+#Fix the epsilon schedule using the best eps_decay from Part 1
+#Now vary the discount factor gamma
 def run_part2_gamma_experiments(best_eps_decay):
     NUM_EPISODES = 300
 
-    #three different gamma values
+    #Three different gamma values
     gamma_settings = {
         "Low gamma": 0.3,   
         "Medium gamma": 0.6,
